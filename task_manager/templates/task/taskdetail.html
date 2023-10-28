@@ -1,0 +1,31 @@
+{% extends "basic.html" %}
+{% block title %}
+  task details
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <h1 class="text-center">Task Detail</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <img src="{{item.image.url}}" alt="" style="width: 300px; height: 300px" class="rounded-circle img-thumbnail" />
+      </div>
+      <div class="col-md-6 my-5 py-5">
+          Title={{item.lowercase}} <br />
+          by: {{item.user.username}} at: {{item.created_at}} <br />
+  
+          {% if request.user == object.user %}
+          <a href="{% url 'edittask' pk=item.id %}"> Edit</a> <br />
+          <a href="{% url 'deletetask' pk=item.id %}">Delete</a> <br />
+          {% endif %} 
+          Title= {{item.title}} <br />
+          Due Date= {{item.due_date}} <br />
+          category={{item.category}} <br />
+          Priority={{item.priority}} <br />
+          Complete={{item.completed }} <br />
+          Last Updated={{item.last_updated}} <br />
+          Complete= {% if item.completed %} Yes {% else %} No{% endif %} <br />
+          <p>Details: {{item.description}}</p>
+      </div>
+      <div>
+  </div>
+{% endblock body%}

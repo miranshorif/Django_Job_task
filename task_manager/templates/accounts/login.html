@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+{% block title %}login page{% endblock title %}
+{% block body %}
+<div class="container">
+    <div class="col-md-6 offset-md-3">
+        <form method="POST">
+            {% csrf_token %}
+            {{form}}<br>
+            <button type="submit">Login</button>
+        </form>
+        <a href="{% url 'password_reset' %}">Forgot Password</a>
+    </div>
+</div>
+{% endblock body %}

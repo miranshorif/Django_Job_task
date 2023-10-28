@@ -1,0 +1,83 @@
+{% extends "basic.html" %}
+
+{% block title %}
+  Task List
+{% endblock title %}
+
+{% block body %}
+<div style="width: 80%; margin:auto">
+<div class="container">
+  <h1>Task List</h1>
+  <form method="get" action="{% url 'tasklist' %}">
+    {% csrf_token %}
+    <input type="text" name="search" value="{{ search_query }}" placeholder="Search by title">
+    <button type="submit">Search</button>
+  </form>
+
+  
+    <div class="col-md-6 offset-md-3">
+      <h1>Filter Tasks</h1>
+      <form action="{% url 'tasklist' %}" method="post">
+        {% csrf_token %}
+  
+      <div class="input-group mb-3">
+      <label for="creation_date">Creation Date:</label>
+      <input type="date" name="creation_date" id="creation_date" value="{{ creation_date }}">
+  
+      <label for="due_date">Due Date:</label>
+      <input type="date" name="due_date" id="due_date" value="{{ due_date }}">
+        <div class="row">
+        <div class="col">
+        <div class="form-group">
+          <label for="exampleFormControlInput1">Priority</label>
+          <select name="priority" id="priority">
+            <option value="" {% if not priority %}selected{% endif %}>All</option>
+            <option value="high" {% if priority == 'high' %}selected{% endif %}>High</option>
+            <option value="medium" {% if priority == 'medium' %}selected{% endif %}>Medium</option>
+            <option value="low" {% if priority == 'low' %}selected{% endif %}>Low</option>
+          </select>
+        </div>
+        </div>
+        
+    
+        
+  
+    <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" name="available">
+          <label class="form-check-label" for="exampleCheck1">Completed</label>
+        </div>
+  
+  
+        <button class="btn btn-primary" type="submit">Filter Tasks</button>
+      </form>
+    </div>
+
+  <h1 class="text-center">All Task Are given below:</h1>
+  {% for p in tasks %}
+  <div class="col-md-8 offset-md-2 mb-3 p-3 border">
+    <div class="row  my-2 position-relative">
+      <div class="col d-flex flex-column">
+        <strong class="d-inline-block mb-2">
+          <div>
+            <b>Created by:
+            <a href="/accounts/otherprofile/{{p.user.username}}/">
+              <h3>{{p.user.username}}</h3>
+            </a>
+          </b>
+            <b>Created At: </b>{{p.created_at}}
+          </div>
+        </strong>
+        <div class="preview">
+          <b>ID: </b> {{p.id}} <br>
+          <b>Task Title: </b> {{p.title}} <br>
+          <p class="card-text">
+            <a href="{% url 'taskdetail' id=p.id %}"> ...Details</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+{% endblock body %}

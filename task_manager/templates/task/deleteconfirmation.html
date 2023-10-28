@@ -1,0 +1,14 @@
+{% extends "basic.html" %}
+{% block title %}
+  delete
+{% endblock title %}
+{% block body %}
+  <div style="width:50%; margin:auto">
+    <h1>Are You Shure to Delete this Task?</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{form}}
+      <button class="btn btn-success" type="submit">submit</button>
+    </form>
+  </div>
+{% endblock body %}
